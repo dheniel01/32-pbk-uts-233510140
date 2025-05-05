@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <main class="container">
+    <h1>Daftar Kegiatan</h1>
+
     <form @submit.prevent="addTodo">
       <input
         v-model="newTodo"
         placeholder="Tambahkan kegiatan"
         class="todo-input"
       />
+      <button type="submit">Tambah</button>
     </form>
 
     <ul v-if="todos.length" class="todo-list">
@@ -14,7 +17,7 @@
       </li>
     </ul>
     <p v-else>Belum ada kegiatan.</p>
-  </div>
+  </main>
 </template>
 
 <script setup>
@@ -32,16 +35,38 @@ function addTodo() {
 </script>
 
 <style scoped>
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+form {
+  margin-bottom: 1rem;
+}
+
 .todo-input {
   padding: 0.5rem;
   width: 70%;
   margin-right: 0.5rem;
 }
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #42b883;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .todo-list {
   list-style: none;
   padding: 0;
   margin-top: 1rem;
 }
+
 .todo-list li {
   background: #f4f4f4;
   margin-bottom: 0.5rem;
