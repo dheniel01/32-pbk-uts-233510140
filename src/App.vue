@@ -11,9 +11,16 @@
       <button type="submit">Tambah</button>
     </form>
 
-    <ul v-if="todos.length" class="todo-list">
+    <div class="filter">
+      <label>
+        <input type="checkbox" v-model="showOnlyIncomplete" />
+        Tampilkan hanya yang belum selesai
+      </label>
+    </div>
+
+    <ul v-if="filteredTodos.length" class="todo-list">
       <li
-        v-for="(todo, index) in todos"
+        v-for="(todo, index) in filteredTodos"
         :key="index"
         class="todo-item"
       >
@@ -30,15 +37,16 @@
         </button>
       </li>
     </ul>
-    <p v-else>Belum ada kegiatan.</p>
+    <p v-else>Tidak ada kegiatan ditampilkan.</p>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const newTodo = ref('')
 const todos = ref([])
+const showOnlyIncomplete = ref(false)
 
 function addTodo() {
   if (newTodo.value.trim() !== '') {
@@ -53,6 +61,13 @@ function addTodo() {
 function removeTodo(index) {
   todos.value.splice(index, 1)
 }
+
+// Filter computed: hanya tampilkan kegiatan belum selesai jika dipilih
+const filteredTodos = computed(() => {
+  return showOnlyIncomplete.value
+    ? todos.value.filter(todo => !todo.done)
+    : todos.value
+})
 </script>
 
 <style scoped>
@@ -80,6 +95,10 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.filter {
+  margin-bottom: 1rem;
 }
 
 .todo-list {
