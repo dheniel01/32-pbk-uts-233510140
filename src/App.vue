@@ -1,30 +1,51 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <form @submit.prevent="addTodo">
+      <input
+        v-model="newTodo"
+        placeholder="Tambahkan kegiatan"
+        class="todo-input"
+      />
+    </form>
+
+    <ul v-if="todos.length" class="todo-list">
+      <li v-for="(todo, index) in todos" :key="index">
+        {{ todo }}
+      </li>
+    </ul>
+    <p v-else>Belum ada kegiatan.</p>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
+<script setup>
+import { ref } from 'vue'
+
+const newTodo = ref('')
+const todos = ref([])
+
+function addTodo() {
+  if (newTodo.value.trim() !== '') {
+    todos.value.push(newTodo.value.trim())
+    newTodo.value = ''
+  }
+}
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.todo-input {
+  padding: 0.5rem;
+  width: 70%;
+  margin-right: 0.5rem;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.todo-list li {
+  background: #f4f4f4;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 </style>
