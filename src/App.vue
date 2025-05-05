@@ -12,8 +12,9 @@
     </form>
 
     <ul v-if="todos.length" class="todo-list">
-      <li v-for="(todo, index) in todos" :key="index">
+      <li v-for="(todo, index) in todos" :key="index" class="todo-item">
         {{ todo }}
+        <button class="delete-button" @click="removeTodo(index)">Batalkan</button>
       </li>
     </ul>
     <p v-else>Belum ada kegiatan.</p>
@@ -31,6 +32,10 @@ function addTodo() {
     todos.value.push(newTodo.value.trim())
     newTodo.value = ''
   }
+}
+
+function removeTodo(index) {
+  todos.value.splice(index, 1)
 }
 </script>
 
@@ -67,10 +72,21 @@ button {
   margin-top: 1rem;
 }
 
-.todo-list li {
+.todo-item {
+  display: flex;
+  justify-content: space-between;
   background: #f4f4f4;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   border-radius: 5px;
+}
+
+.delete-button {
+  background-color: #ff6b6b;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>
