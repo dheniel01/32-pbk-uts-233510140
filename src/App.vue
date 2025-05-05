@@ -22,7 +22,7 @@
             type="checkbox"
             v-model="todo.done"
           />
-          <span>{{ todo.text }}</span>
+          <span :class="{ done: todo.done }">{{ todo.text }}</span>
         </label>
 
         <button class="delete-button" @click="removeTodo(index)">
@@ -103,6 +103,11 @@ button {
   align-items: center;
   gap: 0.5rem;
   flex-grow: 1;
+}
+
+.done {
+  text-decoration: line-through;
+  color: gray;
 }
 
 .delete-button {
