@@ -12,9 +12,22 @@
     </form>
 
     <ul v-if="todos.length" class="todo-list">
-      <li v-for="(todo, index) in todos" :key="index" class="todo-item">
-        {{ todo }}
-        <button class="delete-button" @click="removeTodo(index)">Batalkan</button>
+      <li
+        v-for="(todo, index) in todos"
+        :key="index"
+        class="todo-item"
+      >
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            v-model="todo.done"
+          />
+          <span>{{ todo.text }}</span>
+        </label>
+
+        <button class="delete-button" @click="removeTodo(index)">
+          Batalkan
+        </button>
       </li>
     </ul>
     <p v-else>Belum ada kegiatan.</p>
@@ -29,7 +42,10 @@ const todos = ref([])
 
 function addTodo() {
   if (newTodo.value.trim() !== '') {
-    todos.value.push(newTodo.value.trim())
+    todos.value.push({
+      text: newTodo.value.trim(),
+      done: false
+    })
     newTodo.value = ''
   }
 }
@@ -75,10 +91,18 @@ button {
 .todo-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: #f4f4f4;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   border-radius: 5px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-grow: 1;
 }
 
 .delete-button {
